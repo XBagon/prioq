@@ -1,6 +1,6 @@
 [package]
 name = "prioq"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["XBagon <xbagon@outlook.de>"]
 description = "Priority Queue implemented using std::collections::BinaryHeap."
 license = "MIT"
