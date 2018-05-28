@@ -75,6 +75,15 @@ mod tests {
         assert_eq!(q.pop(),None);
     }
 
+    #[test]
+    fn test_priority_queue_iter(){
+        let q = new_test_priority_queue();
+        let mut iter = q.iter();
+        assert_eq!(iter.next().unwrap(),(&9, &"c"));
+        assert_eq!(iter.next().unwrap(),(&2, &"a"));
+        assert_eq!(iter.next().unwrap(),(&-52, &"b"));
+    }
+
 }
 
 

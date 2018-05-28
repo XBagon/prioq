@@ -1,4 +1,5 @@
-use std::collections::BinaryHeap;
+extern crate binary_heap_plus;
+use self::binary_heap_plus::BinaryHeap;
 
 pub struct PriorityQueue<T, U> where T: Ord + PartialOrd + Eq{
     heap : BinaryHeap<PriorityQueueItem<T,U>>
@@ -11,32 +12,43 @@ impl<T,U> PriorityQueue<T, U> where T: Ord + PartialOrd + Eq{
         }
     }
 
+    pub fn with_capacity(capacity: usize) -> Self{
+        PriorityQueue{
+            heap: BinaryHeap::with_capacity(capacity),
+        }
+    }
+
+    pub fn iter(&self) -> impl Iterator<Item=(&T, &U)>
+    {
+        self.heap.into_iter().map(|x|(&x.priority, &x.item))
+    }
+
     pub fn push(&mut self, priority: T, item: U) {
         self.heap.push(PriorityQueueItem::new(priority,item));
     }
 
     pub fn pop_priority(&mut self) -> Option<T> {
-        self.heap.pop().and_then(|x|{Some(x.priority)})
+        self.heap.pop().map(|x|x.priority)
     }
 
     pub fn pop_item(&mut self) -> Option<U> {
-        self.heap.pop().and_then(|x|{Some(x.item)})
+        self.heap.pop().map(|x|x.item)
     }
 
     pub fn pop(&mut self) -> Option<(T,U)> {
-        self.heap.pop().and_then(|x|{Some((x.priority,x.item))})
+        self.heap.pop().map(|x|(x.priority,x.item))
     }
 
-    pub fn peek_priority(&mut self) -> Option<&T> {
-        self.heap.peek().and_then(|x|{Some(&x.priority)})
+    pub fn peek_priority(&self) -> Option<&T> {
+        self.heap.peek().map(|x|&x.priority)
     }
 
-    pub fn peek_item(&mut self) -> Option<&U> {
-        self.heap.peek().and_then(|x|{Some(&x.item)})
+    pub fn peek_item(&self) -> Option<&U> {
+        self.heap.peek().map(|x|&x.item)
     }
 
-    pub fn peek(&mut self) -> Option<(&T,&U)> {
-        self.heap.peek().and_then(|x|{Some((&x.priority,&x.item))})
+    pub fn peek(&self) -> Option<(&T,&U)> {
+        self.heap.peek().map(|x|(&x.priority,&x.item))
     }
 }
 
@@ -51,32 +63,43 @@ impl<T,U> ReversePriorityQueue<T, U> where T: Ord + PartialOrd + Eq{
         }
     }
 
+    pub fn with_capacity(capacity: usize) -> Self{
+        ReversePriorityQueue{
+            heap: BinaryHeap::with_capacity(capacity),
+        }
+    }
+
+    pub fn iter(&self) -> impl Iterator<Item=(&T, &U)>
+    {
+        self.heap.iter().map(|x|(&x.priority, &x.item))
+    }
+
     pub fn push(&mut self, priority: T, item: U) {
         self.heap.push(ReversePriorityQueueItem::new(priority,item));
     }
 
     pub fn pop_priority(&mut self) -> Option<T> {
-        self.heap.pop().and_then(|x|{Some(x.priority)})
+        self.heap.pop().map(|x|x.priority)
     }
 
     pub fn pop_item(&mut self) -> Option<U> {
-        self.heap.pop().and_then(|x|{Some(x.item)})
+        self.heap.pop().map(|x|x.item)
     }
 
     pub fn pop(&mut self) -> Option<(T,U)> {
-        self.heap.pop().and_then(|x|{Some((x.priority,x.item))})
+        self.heap.pop().map(|x|(x.priority,x.item))
     }
 
-    pub fn peek_priority(&mut self) -> Option<&T> {
-        self.heap.peek().and_then(|x|{Some(&x.priority)})
+    pub fn peek_priority(&self) -> Option<&T> {
+        self.heap.peek().map(|x|&x.priority)
     }
 
-    pub fn peek_item(&mut self) -> Option<&U> {
-        self.heap.peek().and_then(|x|{Some(&x.item)})
+    pub fn peek_item(&self) -> Option<&U> {
+        self.heap.peek().map(|x|&x.item)
     }
 
-    pub fn peek(&mut self) -> Option<(&T,&U)> {
-        self.heap.peek().and_then(|x|{Some((&x.priority,&x.item))})
+    pub fn peek(&self) -> Option<(&T,&U)> {
+        self.heap.peek().map(|x|(&x.priority,&x.item))
     }
 }
 
